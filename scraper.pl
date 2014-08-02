@@ -19,7 +19,7 @@ use Time::Local;
 # Don't buffer.
 $OUTPUT_AUTOFLUSH = 1;
 
-# Constants.
+# Decoding og months.
 my $DATE_WORD_HR = {
 	decode_utf8('leden') => 1,
 	decode_utf8('únor') => 2,
