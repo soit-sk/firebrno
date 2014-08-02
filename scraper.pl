@@ -24,6 +24,8 @@ my $MODE = 0;
 
 # First page.
 my $PAGE = 1;
+$PAGE = 791;
+
 # Decoding og months.
 my $DATE_WORD_HR = {
 	decode_utf8('leden') => 1,
