@@ -64,6 +64,7 @@ my $dt = Database::DumpTruck->new({
 	'dbname' => 'data.sqlite',
 	'table' => 'data',
 });
+$dt->create_index(['ID'], 'data', 1, 1);
 
 # Create a user agent object.
 my $ua = LWP::UserAgent->new(
