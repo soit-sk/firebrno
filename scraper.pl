@@ -19,6 +19,9 @@ use Time::Local;
 # Don't buffer.
 $OUTPUT_AUTOFLUSH = 1;
 
+# Mode (0 - Process all items, 1 - After one in database skip others).
+my $MODE = 0;
+
 # Decoding og months.
 my $DATE_WORD_HR = {
 	decode_utf8('leden') => 1,
@@ -141,7 +144,9 @@ sub process_page {
 				'Type' => $type,
 			});
 		} else {
-			return;
+			if ($MODE == 1) {
+				return;
+			}
 		}
 	}
 	return next_link($uri, $root);
