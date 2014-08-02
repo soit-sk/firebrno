@@ -22,6 +22,8 @@ $OUTPUT_AUTOFLUSH = 1;
 # Mode (0 - Process all items, 1 - After one in database skip others).
 my $MODE = 0;
 
+# First page.
+my $PAGE = 1;
 # Decoding og months.
 my $DATE_WORD_HR = {
 	decode_utf8('leden') => 1,
@@ -50,7 +52,7 @@ my $DISTRICT_IDS_HR = {
 };
 
 # URI of service.
-my $base_uri = URI->new('http://www.firebrno.cz/modules/incidents/index.php');
+my $base_uri = URI->new("http://www.firebrno.cz/modules/incidents/index.php?page=$PAGE");
 
 # Open a database handle.
 my $dt = Database::DumpTruck->new({
