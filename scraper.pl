@@ -26,6 +26,9 @@ my $MODE = 0;
 my $PAGE = 1;
 $PAGE = 791;
 
+# Page timeout.
+my $TIMEOUT = 1;
+
 # Decoding og months.
 my $DATE_WORD_HR = {
 	decode_utf8('leden') => 1,
@@ -71,6 +74,7 @@ my $ua = LWP::UserAgent->new(
 my $page_uri = $base_uri;
 while ($page_uri) {
 	$page_uri = process_page($page_uri);
+	sleep $TIMEOUT;
 }
 
 # Get database date from web datetime.
