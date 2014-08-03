@@ -24,6 +24,7 @@ my $MODE = 0;
 
 # First page.
 my $PAGE = 1;
+$PAGE=2500;
 
 # Page timeout.
 my $TIMEOUT = 1;
