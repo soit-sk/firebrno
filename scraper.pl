@@ -20,7 +20,7 @@ use Time::Local;
 $OUTPUT_AUTOFLUSH = 1;
 
 # Mode (0 - Process all items, 1 - After one in database skip others).
-my $MODE = 0;
+my $MODE = 1;
 
 # First page.
 my $PAGE = 1;
