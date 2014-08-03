@@ -2,7 +2,10 @@ TODO
 ====
 1. Dalsi detaily z details stranky.
 3. Prijit na to jak pouzit create_table() a pak za nej dat index.
-4.
+4. morph.io pravdepodobne neni schopno zobrazit prilis velky log.
+   Takze by bylo dobre vypisovat ., kdyz jenom stranku projdu a informace o
+   strance vypisovat jenom tehdy, kdyz tam neco najdu.
+5.
 
 Applied
 =======
