@@ -114,22 +114,40 @@ sub process_page {
 	my $root = get_root($uri);
 	my @items = $root->find_by_attribute('class', 'inc-item');
 	foreach my $item (@items) {
-		my ($date_div, $type_div) = $item->find_by_attribute('class', 'inc-info')
-			->content_list;
+		my $date_div = $item->find_by_attribute('class', 'inc-date');
 		my $datetime = get_db_datetime($date_div->as_text);
 		remove_trailing(\$datetime);
-		my $type = $type_div->as_text;
-		remove_trailing(\$type);
 		my $link = URI->new($base_uri->scheme.'://'.$base_uri->host.
 			'/modules/incidents/'.
-			$item->find_by_attribute('class', 'inc-detail-link')
-			->find_by_tag_name('a')->attr('href'));
+			$item->find_by_tag_name('a')->attr('href'));
 		my $id = $link->query_param('filter[id]');
 		my $district = $DISTRICT_IDS_HR->{$link->query_param('district_id')};
-		my $details = $item->find_by_attribute('class', 'inc-content')->as_text;
-		remove_trailing(\$details);
-		my $summary = $item->find_by_tag_name('h3')->as_text;
+
+		my @divs = $item->find_by_tag_name('div');
+		my $inc_content_div = $divs[3];
+		my $summary = $inc_content_div->as_text;
 		remove_trailing(\$summary);
+
+		my $date = $date_div->as_text;
+		remove_trailing(\$date);
+		$summary =~ s/${date}//ms;
+
+		my $detail_root = get_root($link);
+		my $inc_info = $detail_root->find_by_attribute('class', 'inc-info');
+		my $type = $inc_info->find_by_tag_name('h2')->as_text;
+		remove_trailing(\$type);
+
+		my $inc_content = $detail_root->find_by_attribute('class', 'inc-content col-md-12 col-sm-12 col-xs-12');
+		my @ps = $inc_content->find_by_tag_name('p');
+		my $details = '';
+		foreach my $p (@ps) {
+			if ($p->find_by_tag_name('strong')->as_text eq 'Popis') {
+				$details = $p->as_text;
+				last;
+			}
+		}
+		$details =~ s/^Popis: //ms;
+		remove_trailing(\$details);
 
 		# Save.
 		my $ret_ar = eval {
@@ -164,7 +182,7 @@ sub process_page {
 # Get next link.
 sub next_link {
 	my ($uri, $root) = @_;
-	my @pag_a = $root->find_by_attribute('class', 'paginator')
+	my @pag_a = $root->find_by_attribute('class', 'pager')
 		->find_by_tag_name('a');
 	my $next_uri;
 	foreach my $pag_a (@pag_a) {
